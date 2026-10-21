@@ -1,0 +1,30 @@
+{
+  "name": "student-task-manager-visual-regression-testing",
+  "version": "1.0.0",
+  "description": "Visual Regression Testing for Student Task Manager using Playwright toHaveScreenshot and Percy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "playwright test tests/visual.spec.js",
+    "test:update-snapshots": "playwright test tests/visual.spec.js --update-snapshots",
+    "test:fail": "playwright test tests/visual-failure.spec.js",
+    "test:percy": "percy exec -- playwright test tests/visual.spec.js",
+    "report": "playwright show-report",
+    "demo:pass": "node scripts/demo-pass.js",
+    "demo:fail": "node scripts/demo-fail.js"
+  },
+  "keywords": [
+    "playwright",
+    "visual-regression-testing",
+    "snapshot-testing",
+    "percy",
+    "student-task-manager"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@percy/cli": "^1.31.1",
+    "@percy/playwright": "^1.0.7",
+    "@playwright/test": "^1.48.0"
+  }
+}
