@@ -39,7 +39,7 @@ test.describe('Student Task Manager - Visual Regression FAIL Demo', () => {
     await page.waitForTimeout(200);
 
     // So sánh với baseline ban đầu -> Sẽ phát hiện sai khác (FAILED)
-    await expect(page).toHaveScreenshot('01-login-page-desktop.png');
+    await expect(page).toHaveScreenshot('01-login-page-desktop.png', { fullPage: true });
   });
 
   test('DEMO_FAIL_02 - Phát hiện vỡ layout Dashboard và sai lệch màu Navbar (CSS Regression)', async ({ page }) => {
@@ -70,7 +70,7 @@ test.describe('Student Task Manager - Visual Regression FAIL Demo', () => {
     await page.waitForTimeout(200);
 
     // So sánh với baseline ban đầu -> Sẽ phát hiện sai khác (FAILED)
-    await expect(page).toHaveScreenshot('03-student-dashboard-full.png');
+    await expect(page).toHaveScreenshot('03-student-dashboard-full.png', { fullPage: true });
   });
 
 });

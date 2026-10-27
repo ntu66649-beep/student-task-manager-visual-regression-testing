@@ -15,7 +15,7 @@ test.describe('Student Task Manager - Visual Regression Suite', () => {
     await page.waitForTimeout(200);
 
     // Playwright visual regression comparison
-    await expect(page).toHaveScreenshot('01-login-page-desktop.png');
+    await expect(page).toHaveScreenshot('01-login-page-desktop.png', { fullPage: true });
 
     // Optional Percy Snapshot
     await takePercySnapshot(page, 'TC_VISUAL_01 - Login Page Desktop');
@@ -32,7 +32,7 @@ test.describe('Student Task Manager - Visual Regression Suite', () => {
     await page.waitForTimeout(200);
 
     // Playwright visual regression comparison
-    await expect(page).toHaveScreenshot('02-login-error-state.png');
+    await expect(page).toHaveScreenshot('02-login-error-state.png', { fullPage: true });
 
     // Optional Percy Snapshot
     await takePercySnapshot(page, 'TC_VISUAL_02 - Login Error State');
@@ -43,7 +43,7 @@ test.describe('Student Task Manager - Visual Regression Suite', () => {
     await loginAsStudent(page);
 
     // Playwright visual regression comparison
-    await expect(page).toHaveScreenshot('03-student-dashboard-full.png');
+    await expect(page).toHaveScreenshot('03-student-dashboard-full.png', { fullPage: true });
 
     // Optional Percy Snapshot
     await takePercySnapshot(page, 'TC_VISUAL_03 - Student Dashboard Full');
@@ -80,7 +80,7 @@ test.describe('Student Task Manager - Visual Regression Suite', () => {
     await loginAsAdmin(page);
 
     // Playwright visual regression comparison
-    await expect(page).toHaveScreenshot('06-admin-dashboard-portal.png');
+    await expect(page).toHaveScreenshot('06-admin-dashboard-portal.png', { fullPage: true });
 
     // Optional Percy Snapshot
     await takePercySnapshot(page, 'TC_VISUAL_06 - Admin Dashboard Portal');
@@ -92,7 +92,7 @@ test.describe('Student Task Manager - Visual Regression Suite', () => {
     await loginAsStudent(page);
 
     // Playwright visual regression comparison
-    await expect(page).toHaveScreenshot('07-student-dashboard-mobile.png');
+    await expect(page).toHaveScreenshot('07-student-dashboard-mobile.png', { fullPage: true });
 
     // Optional Percy Snapshot
     await takePercySnapshot(page, 'TC_VISUAL_07 - Mobile View 375x667');
@@ -104,7 +104,7 @@ test.describe('Student Task Manager - Visual Regression Suite', () => {
     await loginAsStudent(page);
 
     // Playwright visual regression comparison
-    await expect(page).toHaveScreenshot('08-student-dashboard-tablet.png');
+    await expect(page).toHaveScreenshot('08-student-dashboard-tablet.png', { fullPage: true });
 
     // Optional Percy Snapshot
     await takePercySnapshot(page, 'TC_VISUAL_08 - Tablet View 768x1024');

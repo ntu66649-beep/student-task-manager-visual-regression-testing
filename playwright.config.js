@@ -33,6 +33,8 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. */
   use: {
     baseURL: 'http://localhost:3000',
+    locale: 'vi-VN',
+    timezoneId: 'Asia/Ho_Chi_Minh',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'off',

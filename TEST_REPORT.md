@@ -1,5 +1,7 @@
 # Báo Cáo Kết Quả Kiểm Thử Thực Tế (Visual Regression Test Report)
 
+> Đây là báo cáo lịch sử ngày 18/10/2026, trước đợt làm mới frontend. Kết quả và hướng dẫn cho phiên bản giao diện ngày 27/10/2026 nằm trong [FRONTEND_UPDATE.md](FRONTEND_UPDATE.md).
+
 - **Tên dự án**: Student Task Manager – Visual Regression Testing
 - **Thời gian thực thi**: 18/10/2026
 - **Môi trường thử nghiệm**:

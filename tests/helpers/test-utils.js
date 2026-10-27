@@ -24,8 +24,9 @@ async function loginAsStudent(page) {
   await page.click('#login-btn');
   await page.waitForSelector('#dashboard-view:not(.hidden)', { state: 'visible' });
   await page.waitForSelector('#stat-total', { state: 'visible' });
-  // Wait for any potential layout or font rendering to stabilize
-  await page.waitForTimeout(300);
+  // Keep the transient welcome toast out of visual baselines.
+  await page.waitForSelector('#toast:not(.show)');
+  await page.evaluate(() => document.fonts.ready);
 }
 
 /**
@@ -39,7 +40,8 @@ async function loginAsAdmin(page) {
   await page.click('#login-btn');
   await page.waitForSelector('#admin-dashboard-view:not(.hidden)', { state: 'visible' });
   await page.waitForSelector('#admin-stat-students', { state: 'visible' });
-  await page.waitForTimeout(300);
+  await page.waitForSelector('#toast:not(.show)');
+  await page.evaluate(() => document.fonts.ready);
 }
 
 module.exports = {

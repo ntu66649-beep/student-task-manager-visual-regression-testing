@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "playwright test tests/visual.spec.js",
+    "test:functional": "playwright test tests/frontend.spec.js",
+    "test:all": "playwright test tests/visual.spec.js tests/frontend.spec.js",
     "test:update-snapshots": "playwright test tests/visual.spec.js --update-snapshots",
     "test:fail": "playwright test tests/visual-failure.spec.js",
     "test:percy": "percy exec -- playwright test tests/visual.spec.js",

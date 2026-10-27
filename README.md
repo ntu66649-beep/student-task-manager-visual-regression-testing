@@ -8,7 +8,7 @@ Dự án kiểm thử hồi quy trực quan (**Visual Regression Testing**) cho 
 
 Visual Regression Testing (Kiểm thử hồi quy giao diện) là kỹ thuật kiểm thử tự động nhằm phát hiện những thay đổi trực quan ngoài ý muốn trên giao diện người dùng (UI) sau khi cập nhật code CSS, HTML hoặc JavaScript.
 
-Dự án tái sử dụng nguyên bản mã nguồn website **Student Task Manager** từ dự án Web E2E Testing, hoạt động độc lập và giữ nguyên vẹn giao diện gốc mà không thay đổi bất kỳ thành phần trang trí nào.
+Dự án tái sử dụng mã nguồn website **Student Task Manager** từ dự án Web E2E Testing và hoạt động độc lập. Frontend đã được làm mới với giao diện sáng xanh tím; xem [FRONTEND_UPDATE.md](FRONTEND_UPDATE.md) để biết thay đổi, kết quả rà code và cách chạy kiểm tra chức năng.
 
 ### Mục tiêu dự án
 - Thiết lập bộ baseline screenshots chuẩn cho các màn hình chính và thành phần quan trọng của website.
@@ -42,14 +42,14 @@ student-task-manager-visual-regression-testing/
 ├── package.json                   # Danh sách thư viện và npm scripts
 ├── playwright.config.js            # Cấu hình Playwright, webServer và snapshotPathTemplate
 ├── server.js                      # Native HTTP Server phục vụ website tại port 3000
-├── src/                           # Mã nguồn website gốc (giữ nguyên vẹn 100%)
+├── src/                           # Mã nguồn frontend hiện tại
 │   ├── index.html                 # Giao diện chính (Login, Student Dashboard, Admin Portal)
 │   ├── css/
-│   │   └── style.css              # File CSS giao diện gốc
+│   │   └── style.css              # Design tokens, layout và responsive
 │   └── js/
 │       └── app.js                 # Xử lý logic và lưu trữ localStorage
 ├── tests/
-│   ├── baselines/                 # Thư mục chứa 8 ảnh chụp chuẩn ban đầu (Baseline)
+│   ├── baselines/                 # 8 ảnh baseline cho giao diện hiện tại
 │   │   ├── 01-login-page-desktop.png
 │   │   ├── 02-login-error-state.png
 │   │   ├── 03-student-dashboard-full.png
@@ -108,6 +108,8 @@ Truy cập tại: `http://localhost:3000`
 | Lệnh | Ý nghĩa | Mục đích |
 |---|---|---|
 | `npm test` | Chạy 8 visual test cases | Kiểm chứng hồi quy so với baseline (kỳ vọng PASS) |
+| `npm run test:functional` | Chạy 11 test chức năng và responsive | Kiểm tra thao tác, lưu dữ liệu, lọc và tràn ngang |
+| `npm run test:all` | Chạy 19 test chính | Visual và chức năng, không gồm demo cố tình FAIL |
 | `npm run test:update-snapshots` | Chụp lại và ghi đè baseline | Dùng khi có thay đổi thiết kế có chủ đích |
 | `npm run test:fail` | Chạy bộ test mô phỏng lỗi | Kích hoạt phát hiện lỗi CSS và sinh diff |
 | `npm run demo:pass` | Chạy kịch bản Demo PASS | Dành cho demo nhanh trước Giảng viên |
