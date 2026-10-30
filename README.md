@@ -164,3 +164,8 @@ Trên báo cáo, chọn test case bị fail, nhấp vào tab **Image Diff** đ�
      npm run test:percy
      ```
 Nếu không cung cấp `PERCY_TOKEN`, hệ thống tự động bỏ qua Percy và chạy cục bộ hoàn toàn bình thường mà không gây lỗi.
+
+
+## StudyFlow shared interface
+
+The login and workspace now use the common StudyFlow design across all seven projects. See [STUDYFLOW_SYNC.md](STUDYFLOW_SYNC.md) for the palette, preserved testing behavior, run instructions and verification limits.

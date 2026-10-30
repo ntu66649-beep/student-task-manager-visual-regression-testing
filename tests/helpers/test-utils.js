@@ -7,6 +7,8 @@
  * @param {import('@playwright/test').Page} page
  */
 async function setupDeterministicStorage(page) {
+  // Freeze the displayed date as well as storage before comparing UI baselines.
+  await page.clock.setFixedTime(new Date('2026-10-30T10:00:00+07:00'));
   await page.addInitScript(() => {
     localStorage.clear();
     sessionStorage.clear();
