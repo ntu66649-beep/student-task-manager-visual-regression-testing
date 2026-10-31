@@ -113,6 +113,7 @@ const taskForm = document.getElementById("task-form");
 const taskTitleInput = document.getElementById("task-title");
 const taskSubjectSelect = document.getElementById("task-subject");
 const taskDueDateInput = document.getElementById("task-due-date");
+const taskReminderInput = document.getElementById("task-reminder");
 const taskPrioritySelect = document.getElementById("task-priority");
 const taskDescInput = document.getElementById("task-desc");
 const taskFormError = document.getElementById("task-form-error");
@@ -259,6 +260,36 @@ function saveTasks() {
   localStorage.setItem(key, JSON.stringify(tasks));
 }
 
+function checkDueReminders() {
+  if (!currentUser) return;
+  const todayString = getTodayDateString();
+  const today = new Date(`${todayString}T00:00:00`);
+  const reminderKey = `student_reminders_${currentUser.username}`;
+  let shown = [];
+  try {
+    shown = JSON.parse(localStorage.getItem(reminderKey) || "[]");
+  } catch (_) {}
+  const dueSoon = tasks.filter((task) => {
+    if (!task.reminder || task.completed || !task.dueDate) return false;
+    const days = Math.round(
+      (new Date(`${task.dueDate}T00:00:00`) - today) / 86400000,
+    );
+    const key = `${task.id}:${todayString}`;
+    if (days < 0 || days > 1 || shown.includes(key)) return false;
+    shown.push(key);
+    return true;
+  });
+  if (!dueSoon.length) return;
+  localStorage.setItem(reminderKey, JSON.stringify(shown));
+  const titles = dueSoon.slice(0, 2).map((task) => `“${task.title}”`).join(", ");
+  const more = dueSoon.length > 2 ? ` và ${dueSoon.length - 2} nhiệm vụ khác` : "";
+  const message = `Có ${dueSoon.length} nhiệm vụ đến hạn hôm nay hoặc ngày mai: ${titles}${more}.`;
+  showToast(message, "info");
+  if ("Notification" in window && Notification.permission === "granted") {
+    new Notification("Nhắc hạn nộp", { body: message });
+  }
+}
+
 // --- RENDER FUNCTIONS ---
 function updateStats() {
   const total = tasks.length;
@@ -292,8 +323,10 @@ function renderTasks() {
   const filteredTasks = tasks.filter((task) => {
     // Search match (title or subject)
     const matchesSearch =
-      task.title.toLowerCase().includes(query) ||
-      task.subject.toLowerCase().includes(query);
+      (task.title || "").toLowerCase().includes(query) ||
+      (task.subject || "").toLowerCase().includes(query) ||
+      (task.desc || "").toLowerCase().includes(query) ||
+      (task.dueDate || "").includes(query);
 
     // Status filter match
     let matchesStatus = true;
@@ -348,7 +381,7 @@ function renderTasks() {
                   <span class="badge ${isCompleted ? "badge-status-completed" : "badge-status-pending"}" data-testid="task-item-status">
                     ${isCompleted ? "Đã hoàn thành" : "Đang chờ"}
                   </span>
-                  ${task.dueDate ? `<span class="task-date" data-testid="task-item-date">${uiIcon("calendar")} ${task.dueDate}</span>` : ""}
+                  ${task.dueDate ? `<span class="task-date" data-testid="task-item-date">${uiIcon("calendar")} ${task.dueDate}${task.reminder ? " · Có nhắc" : ""}</span>` : ""}
                 </div>
               </div>
             </div>
@@ -450,6 +483,7 @@ function handleLogin(e) {
     switchView("dashboard");
     renderTasks();
     showToast(`Chào mừng ${currentUser.name} đã đăng nhập!`, "success");
+    window.setTimeout(checkDueReminders, 350);
   }
 }
 
@@ -471,6 +505,7 @@ function handleAddTask(e) {
   const subject = taskSubjectSelect.value;
   const priority = taskPrioritySelect.value;
   const dueDate = taskDueDateInput.value;
+  const reminder = Boolean(taskReminderInput && taskReminderInput.checked && dueDate);
   const desc = taskDescInput.value.trim();
 
   // Validation: Title is required
@@ -499,6 +534,7 @@ function handleAddTask(e) {
     subject: subject,
     priority: priority,
     dueDate: dueDate,
+    reminder,
     desc: desc,
     completed: false,
     createdAt: new Date().toISOString(),
@@ -771,6 +807,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadTasks();
         switchView("dashboard");
         renderTasks();
+        checkDueReminders();
       }
     } catch (e) {
       localStorage.removeItem("student_current_user");
