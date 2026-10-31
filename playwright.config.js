@@ -1,4 +1,5 @@
 const { defineConfig, devices } = require('@playwright/test');
+const baseURL = `http://localhost:${process.env.PORT || 3000}`;
 
 /**
  * Visual Regression Testing Configuration
@@ -32,7 +33,7 @@ module.exports = defineConfig({
   ],
   /* Shared settings for all the projects below. */
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL,
     locale: 'vi-VN',
     timezoneId: 'Asia/Ho_Chi_Minh',
     trace: 'retain-on-failure',
@@ -56,7 +57,7 @@ module.exports = defineConfig({
   /* Run local dev server before starting the tests */
   webServer: {
     command: 'node server.js',
-    url: 'http://localhost:3000',
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 10 * 1000,
   },
